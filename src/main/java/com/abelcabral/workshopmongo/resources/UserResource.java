@@ -1,11 +1,13 @@
 package com.abelcabral.workshopmongo.resources;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abelcabral.workshopmongo.domain.User;
@@ -18,7 +20,8 @@ public class UserResource {
 	// Agora instanciamos nosso serviço para ter acesso a seus metodos, o inspring ja cuida de inicializa-lo
 	@Autowired
 	private UserService service;
-	
+	private String id;
+
 	//@GetMapping // Informamos qual método de acesso a essa funcao no caso um Get e a rota
 	@GetMapping("/users")
 	public ResponseEntity<List<UserDTO>> findAll() {
@@ -29,5 +32,11 @@ public class UserResource {
 		
 		// Formatamos nossa resposta para uma versao mais sofisticada
 		return ResponseEntity.ok().body(listDTO);		
+	}
+
+	@GetMapping("/users/{id}")
+	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
+		User obj = service.findById(id);
+		return ResponseEntity.ok().body(new UserDTO(obj));
 	}
 }
