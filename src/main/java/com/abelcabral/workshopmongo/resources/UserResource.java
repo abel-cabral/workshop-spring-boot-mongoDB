@@ -1,25 +1,28 @@
 package com.abelcabral.workshopmongo.resources;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abelcabral.workshopmongo.domain.User;
+import com.abelcabral.workshopmongo.services.UserService;
 
 @RestController // Para dizer que é uma classe que utilizara recurso rest precisamos usar
-@RequestMapping(value="/users") // Nome da rota, normalemnte plural
 public class UserResource {
 	
-	@GetMapping // Informamos qual método de acesso a essa funcaono caso um Get
+	// Agora instanciamos nosso serviço para ter acesso a seus metodos, o inspring ja cuida de inicializa-lo
+	@Autowired
+	private UserService service;
+	
+	//@GetMapping // Informamos qual método de acesso a essa funcao no caso um Get e a rota
+	@GetMapping("/users")
 	public ResponseEntity<List<User>> findAll() {
-		List<User> list = new ArrayList<User>();
-		list.add(new User("1", "Regina Casé", "regininha@globo.com"));
-		list.add(new User("3", "Paulo Saulo", "saulo@bol.com"));
-		
+		List<User> list = service.findAll();
 		return ResponseEntity.ok().body(list);		// Formatamos nossa resposta para uma versao mais sofisticada
 	}
 }

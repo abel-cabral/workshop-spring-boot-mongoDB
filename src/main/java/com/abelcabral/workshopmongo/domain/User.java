@@ -2,10 +2,16 @@ package com.abelcabral.workshopmongo.domain;
 
 import java.io.Serializable;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+// Indica que nossa classe se trata de uma coleçao relacionada ao mongoDB, podemos usar
+@Document(collection = "user")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	@Id	// Em cima do atributo que usamos para identificar a classe o identificamos no caso @Id
 	private String id;
 
 	private String name;
