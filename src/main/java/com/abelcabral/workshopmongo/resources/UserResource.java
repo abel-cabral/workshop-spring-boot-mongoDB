@@ -1,18 +1,18 @@
 package com.abelcabral.workshopmongo.resources;
 
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.abelcabral.workshopmongo.dto.UserFromDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.abelcabral.workshopmongo.domain.User;
 import com.abelcabral.workshopmongo.dto.UserDTO;
 import com.abelcabral.workshopmongo.services.UserService;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController // Para dizer que é uma classe que utilizara recurso rest precisamos usar
 public class UserResource {
@@ -38,5 +38,20 @@ public class UserResource {
 	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(new UserDTO(obj));
+	}
+
+	@PostMapping("/user")
+	ResponseEntity<UserFromDTO> insert(@RequestBody UserFromDTO obj) {
+		System.out.printf(obj.getEmail());
+		System.out.printf(obj.getName());
+
+		User user = obj.bodyUserRequest();
+		user = service.insert(user);
+
+		// Captura o id gerado pela inserçao
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+
+		// Retorna um 200 com um objeto vazio e no header o endereço do local de origem
+		return ResponseEntity.created(uri).build();
 	}
 }

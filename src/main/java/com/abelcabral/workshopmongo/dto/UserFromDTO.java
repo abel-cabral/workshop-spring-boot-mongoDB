@@ -1,32 +1,27 @@
 package com.abelcabral.workshopmongo.dto;
 
-import java.io.Serializable;
-
 import com.abelcabral.workshopmongo.domain.User;
 
-// Para limitar o que pode ser lido
-public class UserDTO implements Serializable {
+import java.io.Serializable;
+
+// Para limitar o que pode ser submetido e aceito em alteraçao
+public class UserFromDTO implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String id;
     private String name;
     private String email;
 
-    public UserDTO() {
+    public UserFromDTO() {
 
     }
 
-    public UserDTO(User obj) {
-        id = obj.getId();
+    public UserFromDTO(User obj) {
         name = obj.getName();
         email = obj.getEmail();
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    // Retorna o novo obj para submissao
+    public User bodyUserRequest() {
+        return new User(null, getName(), getEmail());
     }
 
     public String getName() {
