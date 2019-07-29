@@ -14,7 +14,6 @@ public class UserService{
 	private UserRepository repo;		// Quando usamos a notacao @Autowired o proprio spring ja ira instanciar o obj para nos
 	
 	public List<User> findAll() {
-		System.out.println(repo.findAll());
 		return repo.findAll();
 	}
 }
