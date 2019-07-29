@@ -40,11 +40,8 @@ public class UserResource {
 		return ResponseEntity.ok().body(new UserDTO(obj));
 	}
 
-	@PostMapping("/user")
+	@PostMapping("/users")
 	ResponseEntity<UserFromDTO> insert(@RequestBody UserFromDTO obj) {
-		System.out.printf(obj.getEmail());
-		System.out.printf(obj.getName());
-
 		User user = obj.bodyUserRequest();
 		user = service.insert(user);
 
@@ -54,4 +51,11 @@ public class UserResource {
 		// Retorna um 200 com um objeto vazio e no header o endereço do local de origem
 		return ResponseEntity.created(uri).build();
 	}
+
+	@DeleteMapping("users/{id}")
+	ResponseEntity<User> delete(@PathVariable String id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();		// Quando a resposta nao tem nada usamos o noContent
+	}
+
 }
