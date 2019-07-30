@@ -2,13 +2,20 @@ package com.abelcabral.workshopmongo.dto;
 
 import com.abelcabral.workshopmongo.domain.User;
 
-public class AuthorDTO {
+import java.io.Serializable;
+
+public class AuthorDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String id;
     private String name;
 
+    public AuthorDTO() {
+    }
+
     public AuthorDTO(User obj) {
-        this.id = obj.getId();
-        this.name = obj.getName();
+        id = obj.getId();
+        name = obj.getName();
     }
 
     public String getId() {
