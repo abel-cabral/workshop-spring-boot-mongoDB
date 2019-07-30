@@ -1,9 +1,12 @@
 package com.abelcabral.workshopmongo.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 // Indica que nossa classe se trata de uma coleçao relacionada ao mongoDB, podemos usar
 @Document(collection = "user")
@@ -18,7 +21,9 @@ public class User implements Serializable {
 
 	private String email;
 
-	//private List<String> post = new ArrayList<String>();
+	// Informa que esse dado é uma relaçao / lazy true garante que ao acessar User verao apenas dados basicos
+	@DBRef(lazy = true)
+	private List<Post> post = new ArrayList<Post>();
 
 	public User(String id, String name, String email) {
 
@@ -28,6 +33,14 @@ public class User implements Serializable {
 
 		this.email = email;
 
+	}
+
+	public List<Post> getPost() {
+		return post;
+	}
+
+	public void setPost(List<Post> post) {
+		this.post = post;
 	}
 
 	public String getId() {
