@@ -1,12 +1,14 @@
 package com.abelcabral.workshopmongo.domain;
 
 import com.abelcabral.workshopmongo.dto.AuthorDTO;
+import com.abelcabral.workshopmongo.dto.CommentDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Objects;
+import java.util.List;
 
 @Document(collection = "post")  // Relaciona esse obj com a coleçao post no mongo
 public class Post implements Serializable {
@@ -18,6 +20,7 @@ public class Post implements Serializable {
     private String title;
     private String body;
     private AuthorDTO author;
+    private List<CommentDTO> comments = new ArrayList<CommentDTO>();
 
     public Post(String id, Date date, String title, String body, AuthorDTO author) {
         this.id = id;
@@ -65,6 +68,14 @@ public class Post implements Serializable {
 
     public void AuthorDTO(AuthorDTO author) {
         this.author = author;
+    }
+
+    public List<CommentDTO> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentDTO> comments) {
+        this.comments = comments;
     }
 
     @Override
