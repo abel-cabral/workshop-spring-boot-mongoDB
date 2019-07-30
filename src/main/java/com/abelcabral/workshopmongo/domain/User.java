@@ -1,9 +1,9 @@
 package com.abelcabral.workshopmongo.domain;
 
-import java.io.Serializable;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.io.Serializable;
 
 // Indica que nossa classe se trata de uma coleçao relacionada ao mongoDB, podemos usar
 @Document(collection = "user")
@@ -17,6 +17,8 @@ public class User implements Serializable {
 	private String name;
 
 	private String email;
+
+	//private List<String> post = new ArrayList<String>();
 
 	public User(String id, String name, String email) {
 
@@ -65,9 +67,7 @@ public class User implements Serializable {
 	}
 
 // Para que nossos objetos possam ser comparaveis
-
 	@Override
-
 	public int hashCode() {
 
 		final int prime = 31;
@@ -81,7 +81,6 @@ public class User implements Serializable {
 	}
 
 	@Override
-
 	public boolean equals(Object obj) {
 
 		if (this == obj)
