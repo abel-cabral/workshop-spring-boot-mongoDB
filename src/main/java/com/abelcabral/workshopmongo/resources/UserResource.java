@@ -58,4 +58,11 @@ public class UserResource {
 		return ResponseEntity.noContent().build();		// Quando a resposta nao tem nada usamos o noContent
 	}
 
+	@PutMapping("users/{id}")
+	public ResponseEntity<UserDTO> update(@RequestBody User obj, @PathVariable String id) {
+		// Precisamos passar para o obj recebido o id da rota
+		obj.setId(id);
+		service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
 }

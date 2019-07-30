@@ -33,4 +33,23 @@ public class UserService{
 		repo.deleteById(id);
 	}
 
+	public User update(User obj) {
+		// Primeiro devemos buscar no banco de dados o obj que queremos alterar
+		User newObj = findById(obj.getId());
+		// Esse metodo copia os dados novos para o obj que
+		updateData(newObj, obj);
+		// Com os novos dados podemos atualizar
+		return repo.save(newObj);
+	}
+
+	// Funcao auxiliar que testa e copia os dados de um obj para outro
+	private void updateData(User newObj, User obj) {
+		if (obj.getEmail() != null) {
+			newObj.setEmail(obj.getEmail());
+		}
+		if (obj.getName() != null) {
+			newObj.setName(obj.getName());
+		}
+	}
+
 }
